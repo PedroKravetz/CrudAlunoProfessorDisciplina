@@ -1,6 +1,6 @@
 package main;
 
-import crudprofessor.ProfessorInternalFrame;
+import crudProfessor.ProfessorInternalFrame;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
