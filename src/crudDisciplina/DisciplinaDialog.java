@@ -12,6 +12,7 @@ public class DisciplinaDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form ProfessorDialog
+     *
      * @param parent
      * @param modal
      */

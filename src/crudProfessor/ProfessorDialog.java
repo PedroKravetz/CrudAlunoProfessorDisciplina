@@ -319,110 +319,80 @@ public class ProfessorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelarBTActionPerformed
 
     private boolean validarForm() {
-        boolean isValido=true;
-        if(cepTF.getText().trim().length()!=9)
-        {
-            isValido=false;
+        boolean isValido = true;
+        if (cepTF.getText().trim().length() != 9) {
+            isValido = false;
             cepLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             cepLB.setForeground(Color.black);
         }
-        
-        if(bairroTF.getText().trim().equals(""))
-        {
-            isValido=false;
+
+        if (bairroTF.getText().trim().equals("")) {
+            isValido = false;
             bairroLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             bairroLB.setForeground(Color.black);
         }
-        
-        if(ruaTF.getText().trim().equals(""))
-        {
-            isValido=false;
+
+        if (ruaTF.getText().trim().equals("")) {
+            isValido = false;
             ruaLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             ruaLB.setForeground(Color.black);
         }
-        
-        if(numeroTF.getText().trim().equals(""))
-        {
-            isValido=false;
+
+        if (numeroTF.getText().trim().equals("")) {
+            isValido = false;
             numeroLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             numeroLB.setForeground(Color.black);
         }
-        
-        if(nomeTF.getText().trim().equals(""))
-        {
-            isValido=false;
+
+        if (nomeTF.getText().trim().equals("")) {
+            isValido = false;
             nomeLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             nomeLB.setForeground(Color.black);
         }
-        
-        if(dataNascimentoTF.getText().trim().length()!=10)
-        {
-            isValido=false;
+
+        if (dataNascimentoTF.getText().trim().length() != 10) {
+            isValido = false;
             dataNascimentoLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             dataNascimentoLB.setForeground(Color.black);
         }
-        
-        if(cpfTF.getText().trim().length()!=14)
-        {
-            isValido=false;
+
+        if (cpfTF.getText().trim().length() != 14) {
+            isValido = false;
             cpfLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             cpfLB.setForeground(Color.black);
         }
-        
-        if(rgTF.getText().trim().length()!=12)
-        {
-            isValido=false;
+
+        if (rgTF.getText().trim().length() != 12) {
+            isValido = false;
             rgLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             rgLB.setForeground(Color.black);
         }
-        
-        if(emailTF.getText().trim().equals(""))
-        {
-            isValido=false;
+
+        if (emailTF.getText().trim().equals("")) {
+            isValido = false;
             emailLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             emailLB.setForeground(Color.black);
         }
-        
-        if(!(masculinoRBT.isSelected()||femininoRBT.isSelected()))
-        {
-            isValido=false;
+
+        if (!(masculinoRBT.isSelected() || femininoRBT.isSelected())) {
+            isValido = false;
             sexoLB.setForeground(Color.red);
-        }
-        else
-        {
+        } else {
             sexoLB.setForeground(Color.black);
         }
         errorLB.setVisible(true);
         return isValido;
     }
-    
+
     /**
      * @param args the command line arguments
      */

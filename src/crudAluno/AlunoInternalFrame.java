@@ -16,6 +16,7 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
      * Creates new form ProfessorInternalFrame
      */
     public AlunoInternalFrame(JFrame parent) {
+        alunoDialog = new AlunoDialog(parent, true);
         initComponents();
     }
 
@@ -178,14 +179,14 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void novoBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoBTActionPerformed
-        // TODO add your handling code here:
+        alunoDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
         pesquisaTF.setText("");
     }//GEN-LAST:event_limparBTActionPerformed
-
-
+    
+    private AlunoDialog alunoDialog;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable alunoTable;
     private javax.swing.JButton editarTB;

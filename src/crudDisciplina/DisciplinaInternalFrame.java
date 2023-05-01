@@ -16,6 +16,7 @@ public class DisciplinaInternalFrame extends javax.swing.JInternalFrame {
      * Creates new form ProfessorInternalFrame
      */
     public DisciplinaInternalFrame(JFrame parent) {
+        disciplinaDialog = new DisciplinaDialog(parent, true);
         initComponents();
     }
 
@@ -178,14 +179,14 @@ public class DisciplinaInternalFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void novoBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoBTActionPerformed
-        // TODO add your handling code here:
+        disciplinaDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
         pesquisaTF.setText("");
     }//GEN-LAST:event_limparBTActionPerformed
-
-
+    
+    private DisciplinaDialog disciplinaDialog;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable disciplinaTable;
     private javax.swing.JButton editarBT;
