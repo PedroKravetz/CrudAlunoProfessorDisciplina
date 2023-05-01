@@ -42,54 +42,73 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dadosProfessorLB" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="dadosProfessorLB" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="salvarBT" linkSize="6" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="cancelarBT" linkSize="6" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="dataNascimentoLB" alignment="0" pref="128" max="32767" attributes="0"/>
-                                      <Component id="emailLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="nomeLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="sexoLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="cpfLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="rgLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="rpLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="salarioLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="departamentoLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="formacaoLB" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="departamentoLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="salarioLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="formacaoLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="rpLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="rgLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cpfLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="sexoLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="dataNascimentoLB" linkSize="8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="emailLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="nomeLB" linkSize="8" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="dataNascimentoTF" linkSize="4" min="-2" pref="309" max="-2" attributes="0"/>
-                                      <Component id="emailTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="nomeTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="cpfTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="rgTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="rpTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane1" min="-2" pref="309" max="-2" attributes="0"/>
-                                      <Component id="salarioTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
-                                      <Component id="departamentoTF" linkSize="4" min="-2" pref="71" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="emailTF" pref="242" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Component id="masculinoRBT" min="-2" pref="98" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="femininoRBT" min="-2" pref="98" max="-2" attributes="0"/>
                                       </Group>
+                                      <Component id="nomeTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="dataNascimentoTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cpfTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="rgTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="rpTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="salarioTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="departamentoTF" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="cepLB" linkSize="8" max="32767" attributes="0"/>
+                                      <Component id="ruaLB" linkSize="8" max="32767" attributes="0"/>
+                                      <Component id="bairroLB" linkSize="8" max="32767" attributes="0"/>
+                                      <Component id="numeroLB" linkSize="8" max="32767" attributes="0"/>
+                                      <Component id="complementoLB" linkSize="8" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jScrollPane2" alignment="0" pref="242" max="32767" attributes="0"/>
+                                      <Component id="cepTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="ruaTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="bairroTF" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="numeroTF" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="salvarBT" linkSize="6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="cancelarBT" linkSize="6" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="errorLB" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -108,58 +127,92 @@
                       <Component id="emailLB" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="emailTF" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="dataNascimentoLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="dataNascimentoTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="sexoLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="masculinoRBT" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="femininoRBT" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="cpfLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cpfTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="rgLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="rgTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="rpLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="rpTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="sexoLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="masculinoRBT" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="femininoRBT" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="cpfLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cpfTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="rgLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rgTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="rpLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="rpTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="dataNascimentoLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="dataNascimentoTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
                           <Component id="formacaoLB" linkSize="3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="salarioLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="salarioTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="departamentoLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="departamentoTF" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane1" linkSize="3" min="-2" pref="122" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="salarioLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="salarioTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="departamentoLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="departamentoTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="cepLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cepTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="ruaLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="ruaTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="bairroLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="bairroTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="numeroLB" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="numeroTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="complementoLB" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="70" pref="70" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
+                  <Component id="errorLB" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="salvarBT" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelarBT" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -220,15 +273,9 @@
             <Property name="text" type="java.lang.String" value="Departamento: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="dataNascimentoTF">
-        </Component>
         <Component class="javax.swing.JTextField" name="emailTF">
         </Component>
         <Component class="javax.swing.JTextField" name="nomeTF">
-        </Component>
-        <Component class="javax.swing.JTextField" name="cpfTF">
-        </Component>
-        <Component class="javax.swing.JTextField" name="rgTF">
         </Component>
         <Component class="javax.swing.JTextField" name="rpTF">
         </Component>
@@ -271,6 +318,91 @@
         <Component class="javax.swing.JButton" name="cancelarBT">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarBTActionPerformed"/>
+          </Events>
+        </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTextArea" name="complementoTF">
+              <Properties>
+                <Property name="columns" type="int" value="20"/>
+                <Property name="rows" type="int" value="5"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Component class="javax.swing.JLabel" name="errorLB">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Dados incorretos"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="complementoLB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Complemento: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="numeroTF">
+        </Component>
+        <Component class="javax.swing.JLabel" name="numeroLB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="N&#xfa;mero: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="bairroLB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bairro: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="bairroTF">
+        </Component>
+        <Component class="javax.swing.JTextField" name="ruaTF">
+        </Component>
+        <Component class="javax.swing.JLabel" name="ruaLB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Rua: "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="cepTF">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="#####-###" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="cepLB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="CEP:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="cpfTF">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="###.###.###-##" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="rgTF">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="##.###.###-#" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="dataNascimentoTF">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="##/##/####" subtype="-1" type="5"/>
+            </Property>
           </Properties>
         </Component>
       </SubComponents>

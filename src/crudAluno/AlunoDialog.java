@@ -78,9 +78,6 @@ public class AlunoDialog extends javax.swing.JDialog {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
         });
 
         dadosAnoLB.setText("Dados do Aluno");
@@ -338,11 +335,6 @@ public class AlunoDialog extends javax.swing.JDialog {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         limparTextos();
     }//GEN-LAST:event_formWindowClosed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        limparTextos();
-        errorLB.setVisible(false);
-    }//GEN-LAST:event_formWindowOpened
 
     private void cancelarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBTActionPerformed
         dispose();
