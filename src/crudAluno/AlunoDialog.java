@@ -5,9 +5,15 @@
 package crudAluno;
 
 import aluno.Aluno;
+import aluno.GerenciarAluno;
+import endereco.Endereco;
 import java.awt.Color;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import pessoa.Sexo;
 
 /**
  *
@@ -343,7 +349,38 @@ public class AlunoDialog extends javax.swing.JDialog {
 
     private void salvarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBTActionPerformed
         if (validarForm()) {
+            errorLB.setVisible(false);
 
+            aluno.setNome(nomeTF.getText().trim());
+
+            try {
+                Date dataNasc = sdf.parse(dataNascimentoTF.getText().trim());
+                aluno.setDataNascimento(dataNasc);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(this, "Data inválida");
+                return;
+            }
+
+            aluno.setCpf(cpfTF.getText().trim());
+            aluno.setRg(rgTF.getText().trim());
+            aluno.setEmail(emailTF.getText().trim());
+            aluno.setRa(Integer.parseInt(raTF.getText().trim()));
+            aluno.setPeriodo(periodoTF.getText().trim());
+            aluno.setAno(anoTF.getText().trim());
+
+            if (masculinoRBT.isSelected()) {
+                aluno.setSexo(Sexo.MASCULINO);
+            } else {
+                aluno.setSexo(Sexo.FEMININO);
+            }
+
+            if (aluno.getId() == 0) {
+                gerAluno.create(aluno);
+            } else {
+                gerAluno.update(aluno);
+            }
+
+            dispose();
         } else {
             errorLB.setVisible(true);
         }
@@ -400,6 +437,7 @@ public class AlunoDialog extends javax.swing.JDialog {
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
+        this.endereco = aluno.getEndereco();
     }
 
     private void limparTextos() {
@@ -515,9 +553,28 @@ public class AlunoDialog extends javax.swing.JDialog {
         return isValido;
     }
 
+    public void setGerenciarAluno(GerenciarAluno gerAluno) {
+        this.gerAluno = gerAluno;
+    }
+
+    public void objectToForm() {
+        nomeTF.setText(aluno.getNome());
+        cpfTF.setText(aluno.getCpf());
+        rgTF.setText(aluno.getRg());
+        emailTF.setText(aluno.getEmail());
+        dataNascimentoTF.setText(sdf.format(aluno.getDataNascimento()));
+        if (aluno.getSexo() == Sexo.MASCULINO) {
+            masculinoRBT.setSelected(true);
+        } else {
+            femininoRBT.setSelected(true);
+        }
+    }
+
     private SimpleDateFormat sdf;
     private Aluno aluno;
     private Calendar cal;
+    private GerenciarAluno gerAluno;
+    private Endereco endereco;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel anoLB;

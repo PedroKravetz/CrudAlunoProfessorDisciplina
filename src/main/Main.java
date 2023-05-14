@@ -1,5 +1,7 @@
 package main;
 
+import crudAluno.AlunoInternalFrame;
+import crudDisciplina.DisciplinaInternalFrame;
 import crudProfessor.ProfessorInternalFrame;
 
 /*
@@ -17,8 +19,12 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         professorJIF = new ProfessorInternalFrame(this);
+        alunoJIF = new AlunoInternalFrame(this);
+        disciplinaJIF = new DisciplinaInternalFrame(this);
         initComponents();
         this.getContentPane().add(professorJIF);
+        this.getContentPane().add(alunoJIF);
+        this.getContentPane().add(disciplinaJIF);
     }
 
     /**
@@ -101,7 +107,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_SairMNIActionPerformed
 
     private void DisciplinaMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisciplinaMNIActionPerformed
-        // TODO add your handling code here:
+        disciplinaJIF.setVisible(true);
     }//GEN-LAST:event_DisciplinaMNIActionPerformed
 
     private void ProfessorMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfessorMNIActionPerformed
@@ -109,7 +115,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_ProfessorMNIActionPerformed
 
     private void AlunoMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlunoMNIActionPerformed
-        // TODO add your handling code here:
+        alunoJIF.setVisible(true);
     }//GEN-LAST:event_AlunoMNIActionPerformed
 
     /**
@@ -148,6 +154,8 @@ public class Main extends javax.swing.JFrame {
     }
 
     private ProfessorInternalFrame professorJIF;
+    private AlunoInternalFrame alunoJIF;
+    private DisciplinaInternalFrame disciplinaJIF;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AlunoMNI;
     private javax.swing.JMenu ArquivoMN;
