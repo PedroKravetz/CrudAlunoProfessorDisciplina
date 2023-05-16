@@ -373,7 +373,13 @@ public class AlunoDialog extends javax.swing.JDialog {
             } else {
                 aluno.setSexo(Sexo.FEMININO);
             }
-
+            endereco.setBairro(bairroTF.getText().trim());
+            endereco.setCep(cepTF.getText().trim());
+            endereco.setComplemento(complementoTF.getText().trim());
+            endereco.setNumero(Integer.parseInt(numeroTF.getText().trim()));
+            endereco.setRua(ruaTF.getText().trim());
+            endereco.setId(aluno.getId());
+            aluno.setEndereco(endereco);
             if (aluno.getId() == 0) {
                 gerAluno.create(aluno);
             } else {
@@ -386,58 +392,17 @@ public class AlunoDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_salvarBTActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AlunoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AlunoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AlunoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AlunoDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AlunoDialog dialog = new AlunoDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     public Aluno getAluno() {
         return aluno;
     }
 
     public void setAluno(Aluno aluno) {
         this.aluno = aluno;
-        this.endereco = aluno.getEndereco();
+        if (aluno.getId() == 0) {
+            endereco = new Endereco();
+        } else {
+            endereco = aluno.getEndereco();
+        }
     }
 
     private void limparTextos() {
@@ -463,7 +428,13 @@ public class AlunoDialog extends javax.swing.JDialog {
             isValido = false;
             raLB.setForeground(Color.red);
         } else {
-            raLB.setForeground(Color.black);
+            try {
+                Integer.parseInt(raTF.getText().trim());
+                raLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                raLB.setForeground(Color.red);
+            }
         }
 
         if (periodoTF.getText().trim().equals("")) {
@@ -477,7 +448,13 @@ public class AlunoDialog extends javax.swing.JDialog {
             isValido = false;
             anoLB.setForeground(Color.red);
         } else {
-            anoLB.setForeground(Color.black);
+            try {
+                Integer.parseInt(anoTF.getText().trim());
+                anoLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                anoLB.setForeground(Color.red);
+            }
         }
 
         if (cepTF.getText().trim().length() != 9) {
@@ -505,7 +482,13 @@ public class AlunoDialog extends javax.swing.JDialog {
             isValido = false;
             numeroLB.setForeground(Color.red);
         } else {
-            numeroLB.setForeground(Color.black);
+            try {
+                Integer.parseInt(numeroTF.getText().trim());
+                numeroLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                numeroLB.setForeground(Color.red);
+            }
         }
 
         if (nomeTF.getText().trim().equals("")) {
@@ -549,7 +532,6 @@ public class AlunoDialog extends javax.swing.JDialog {
         } else {
             sexoLB.setForeground(Color.black);
         }
-        errorLB.setVisible(true);
         return isValido;
     }
 
@@ -563,6 +545,14 @@ public class AlunoDialog extends javax.swing.JDialog {
         rgTF.setText(aluno.getRg());
         emailTF.setText(aluno.getEmail());
         dataNascimentoTF.setText(sdf.format(aluno.getDataNascimento()));
+        raTF.setText(String.valueOf(aluno.getRa()));
+        periodoTF.setText(aluno.getPeriodo());
+        anoTF.setText(aluno.getAno());
+        cepTF.setText(endereco.getCep());
+        ruaTF.setText(endereco.getRua());
+        numeroTF.setText(String.valueOf(endereco.getNumero()));
+        bairroTF.setText(endereco.getBairro());
+        complementoTF.setText(endereco.getComplemento());
         if (aluno.getSexo() == Sexo.MASCULINO) {
             masculinoRBT.setSelected(true);
         } else {

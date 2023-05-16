@@ -4,20 +4,43 @@
  */
 package crudAluno;
 
+import aluno.Aluno;
+import aluno.AlunoTableModel;
+import aluno.GerenciarAluno;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Collection;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Pedro Kravetz
  */
-public class AlunoInternalFrame extends javax.swing.JInternalFrame {
+public class AlunoInternalFrame extends javax.swing.JInternalFrame implements WindowListener {
 
     /**
      * Creates new form ProfessorInternalFrame
      */
     public AlunoInternalFrame(JFrame parent) {
         alunoDialog = new AlunoDialog(parent, true);
+        gerAluno = new GerenciarAluno();
+        alunoDialog.setGerenciarAluno(gerAluno);
+        alunoTableModel = new AlunoTableModel(gerAluno);
+        alunoDialog.addWindowListener(this);
         initComponents();
+        desabilitarEditarRemover();
+        alunoTable.getTableHeader().setReorderingAllowed(false);
+    }
+
+    private void desabilitarEditarRemover() {
+        editarBT.setEnabled(false);
+        removerBT.setEnabled(false);
+    }
+
+    private void habilitarEditarRemover() {
+        editarBT.setEnabled(true);
+        removerBT.setEnabled(true);
     }
 
     /**
@@ -37,7 +60,7 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
         limparBT = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         novoBT = new javax.swing.JButton();
-        editarTB = new javax.swing.JButton();
+        editarBT = new javax.swing.JButton();
         removerBT = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         alunoTable = new javax.swing.JTable();
@@ -49,6 +72,11 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
         nomeLB.setText("Nome: ");
 
         pesquisaBT.setText("Pesquisar");
+        pesquisaBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisaBTActionPerformed(evt);
+            }
+        });
 
         limparBT.setText("Limpar");
         limparBT.addActionListener(new java.awt.event.ActionListener() {
@@ -106,9 +134,19 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
             }
         });
 
-        editarTB.setText("Editar");
+        editarBT.setText("Editar");
+        editarBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarBTActionPerformed(evt);
+            }
+        });
 
         removerBT.setText("Remover");
+        removerBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerBTActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -118,13 +156,13 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(novoBT)
                 .addGap(66, 66, 66)
-                .addComponent(editarTB)
+                .addComponent(editarBT)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(removerBT)
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {editarTB, novoBT, removerBT});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {editarBT, novoBT, removerBT});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,22 +170,17 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(novoBT)
-                    .addComponent(editarTB)
+                    .addComponent(editarBT)
                     .addComponent(removerBT))
                 .addContainerGap(7, Short.MAX_VALUE))
         );
 
-        alunoTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        alunoTable.setModel(alunoTableModel);
+        alunoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                alunoTableMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(alunoTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -179,17 +212,67 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void novoBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoBTActionPerformed
+        alunoDialog.setAluno(new Aluno());
         alunoDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
+        alunoTableModel.atualizarTabela();
+        desabilitarEditarRemover();
         pesquisaTF.setText("");
     }//GEN-LAST:event_limparBTActionPerformed
-    
+
+    private void pesquisaBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaBTActionPerformed
+        String nomePesquisa = pesquisaTF.getText().trim();
+        if (!nomePesquisa.isEmpty()) {
+            Collection<Aluno> alunos = gerAluno.listar(nomePesquisa);
+
+            alunoTableModel.setClientes(alunos);
+            alunoTableModel.popularMatriz();
+            alunoTableModel.fireTableDataChanged();
+        }
+    }//GEN-LAST:event_pesquisaBTActionPerformed
+
+    private void editarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBTActionPerformed
+        int linha = alunoTable.getSelectedRow();
+        Aluno aluno = (Aluno) alunoTableModel.getValueAt(linha, 4);
+        alunoDialog.setAluno(aluno);
+        alunoDialog.objectToForm();
+        alunoDialog.setVisible(true);
+    }//GEN-LAST:event_editarBTActionPerformed
+
+    private void removerBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerBTActionPerformed
+        int linha = alunoTable.getSelectedRow();
+        Aluno aluno = (Aluno) alunoTableModel.getValueAt(linha, 4);
+        int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o cliente " + aluno.getNome() + "?",
+                "Confirma a exclusão?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
+            gerAluno.remover(aluno.getId());
+            alunoTableModel.atualizarTabela();
+            desabilitarEditarRemover();
+        }
+    }//GEN-LAST:event_removerBTActionPerformed
+
+    private void alunoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alunoTableMouseClicked
+        int linha = alunoTable.getSelectedRow();
+        if (linha >= 0)
+            habilitarEditarRemover();
+    }//GEN-LAST:event_alunoTableMouseClicked
+
+    public GerenciarAluno getGerAluno() {
+        return gerAluno;
+    }
+
+    public void setGerAluno(GerenciarAluno gerAluno) {
+        this.gerAluno = gerAluno;
+    }
+
+    private GerenciarAluno gerAluno;
     private AlunoDialog alunoDialog;
+    private AlunoTableModel alunoTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable alunoTable;
-    private javax.swing.JButton editarTB;
+    private javax.swing.JButton editarBT;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -201,4 +284,40 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextField pesquisaTF;
     private javax.swing.JButton removerBT;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        alunoTableModel.atualizarTabela();
+        desabilitarEditarRemover();
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }
