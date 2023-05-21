@@ -13,6 +13,7 @@ import professor.Professor;
 public class Disciplina {
 
     private Professor professor;
+    private int id;
     private String nome;
     private String codigo;
     private char bloco;
@@ -20,6 +21,14 @@ public class Disciplina {
     private int cargaHoraria;
     private String ementa;
     private String bibliografia;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Professor getProfessor() {
         return professor;

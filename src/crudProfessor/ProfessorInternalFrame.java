@@ -4,13 +4,20 @@
  */
 package crudProfessor;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Collection;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import professor.GerenciarProfessor;
+import professor.Professor;
+import professor.ProfessorTableModel;
 
 /**
  *
  * @author Pedro Kravetz
  */
-public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
+public class ProfessorInternalFrame extends javax.swing.JInternalFrame implements WindowListener {
 
     /**
      * Creates new form ProfessorInternalFrame
@@ -19,7 +26,23 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
      */
     public ProfessorInternalFrame(JFrame parent) {
         professorDialog = new ProfessorDialog(parent, true);
+        gerProfessor = new GerenciarProfessor();
+        professorDialog.setGerenciarProfessor(gerProfessor);
+        professorTableModel = new ProfessorTableModel(gerProfessor);
+        professorDialog.addWindowListener(this);
         initComponents();
+        desabilitarEditarRemover();
+        professorTable.getTableHeader().setReorderingAllowed(false);
+    }
+
+    private void desabilitarEditarRemover() {
+        editarBT.setEnabled(false);
+        removerBT.setEnabled(false);
+    }
+
+    private void habilitarEditarRemover() {
+        editarBT.setEnabled(true);
+        removerBT.setEnabled(true);
     }
 
     /**
@@ -44,6 +67,11 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         professorTable = new javax.swing.JTable();
 
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gerenciamento de Professores");
+
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         pesquisaLB.setText("Pesquisar");
@@ -51,6 +79,11 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
         nomeLB.setText("Nome: ");
 
         pesquisaBT.setText("Pesquisar");
+        pesquisaBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesquisaBTActionPerformed(evt);
+            }
+        });
 
         limparBT.setText("Limpar");
         limparBT.addActionListener(new java.awt.event.ActionListener() {
@@ -109,8 +142,18 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
         });
 
         editarBT.setText("Editar");
+        editarBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editarBTActionPerformed(evt);
+            }
+        });
 
         removerBT.setText("Remover");
+        removerBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removerBTActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -121,7 +164,7 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
                 .addComponent(novoBT)
                 .addGap(66, 66, 66)
                 .addComponent(editarBT)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(removerBT)
                 .addContainerGap())
         );
@@ -139,17 +182,12 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap(7, Short.MAX_VALUE))
         );
 
-        professorTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        professorTable.setModel(professorTableModel);
+        professorTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                professorTableMouseClicked(evt);
             }
-        ));
+        });
         jScrollPane1.setViewportView(professorTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -160,11 +198,9 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,14 +217,64 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void novoBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoBTActionPerformed
+        professorDialog.setProfessor(new Professor());
         professorDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
+        professorTableModel.atualizarTabela();
+        desabilitarEditarRemover();
         pesquisaTF.setText("");
     }//GEN-LAST:event_limparBTActionPerformed
-    
+
+    private void pesquisaBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisaBTActionPerformed
+        String nomePesquisa = pesquisaTF.getText().trim();
+        if (!nomePesquisa.isEmpty()) {
+            Collection<Professor> professores = gerProfessor.listar(nomePesquisa);
+
+            professorTableModel.setProfessores(professores);
+            professorTableModel.popularMatriz();
+            professorTableModel.fireTableDataChanged();
+        }
+    }//GEN-LAST:event_pesquisaBTActionPerformed
+
+    private void editarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editarBTActionPerformed
+        int linha = professorTable.getSelectedRow();
+        Professor professor = (Professor) professorTableModel.getValueAt(linha, 4);
+        professorDialog.setProfessor(professor);
+        professorDialog.objectToForm();
+        professorDialog.setVisible(true);
+    }//GEN-LAST:event_editarBTActionPerformed
+
+    private void removerBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removerBTActionPerformed
+        int linha = professorTable.getSelectedRow();
+        Professor professor = (Professor) professorTableModel.getValueAt(linha, 4);
+        int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o cliente " + professor.getNome() + "?",
+                "Confirma a exclusão?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
+            gerProfessor.remover(professor.getId());
+            professorTableModel.atualizarTabela();
+            desabilitarEditarRemover();
+        }
+    }//GEN-LAST:event_removerBTActionPerformed
+
+    private void professorTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_professorTableMouseClicked
+        int linha = professorTable.getSelectedRow();
+        if (linha >= 0)
+            habilitarEditarRemover();
+    }//GEN-LAST:event_professorTableMouseClicked
+
+    public GerenciarProfessor getGerProfessor() {
+        return gerProfessor;
+    }
+
+    public void setGerProfessor(GerenciarProfessor gerProfessor) {
+        this.gerProfessor = gerProfessor;
+    }
+
     private ProfessorDialog professorDialog;
+    private GerenciarProfessor gerProfessor;
+    private ProfessorTableModel professorTableModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton editarBT;
     private javax.swing.JPanel jPanel1;
@@ -203,4 +289,39 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTable professorTable;
     private javax.swing.JButton removerBT;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        professorTableModel.atualizarTabela();
+        desabilitarEditarRemover();
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

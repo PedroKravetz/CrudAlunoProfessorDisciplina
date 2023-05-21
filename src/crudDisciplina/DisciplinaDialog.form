@@ -8,6 +8,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -64,7 +67,6 @@
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="nomeLB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="codigoLB" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="professorLB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="blocoLB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="salaLB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="cargaHorariaLB" alignment="0" max="32767" attributes="0"/>
@@ -73,12 +75,12 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="nomeTF" linkSize="8" pref="313" max="32767" attributes="0"/>
                                       <Component id="codigoTF" min="-2" pref="313" max="-2" attributes="0"/>
-                                      <Component id="professorCB" linkSize="8" pref="313" max="32767" attributes="0"/>
                                       <Component id="blocoTF" linkSize="8" pref="313" max="32767" attributes="0"/>
                                       <Component id="salaTF" linkSize="8" pref="126" max="32767" attributes="0"/>
                                       <Component id="cargaHorariaTF" linkSize="8" pref="126" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Component id="errorLB" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -105,12 +107,7 @@
                       <Component id="codigoLB" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="codigoTF" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="professorLB" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="professorCB" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="blocoLB" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="blocoTF" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -135,12 +132,14 @@
                       <Component id="jScrollPane2" linkSize="9" pref="122" max="32767" attributes="0"/>
                       <Component id="bibliografiaLB" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="errorLB" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="salvarBT" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cancelarBT" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -159,11 +158,6 @@
         <Component class="javax.swing.JLabel" name="codigoLB">
           <Properties>
             <Property name="text" type="java.lang.String" value="C&#xf3;digo: "/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="professorLB">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Professor: "/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="blocoLB">
@@ -197,6 +191,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salvarBTActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cancelarBT">
           <Properties>
@@ -205,16 +202,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarBTActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="professorCB">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="blocoTF">
           <Properties>
@@ -266,10 +253,18 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextPane" name="jTextPane1">
+            <Component class="javax.swing.JTextPane" name="ementaTF">
             </Component>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JLabel" name="errorLB">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" id="red" palette="1" red="ff" type="palette"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Dados Incorretos"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

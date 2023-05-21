@@ -65,6 +65,11 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
         jScrollPane1 = new javax.swing.JScrollPane();
         alunoTable = new javax.swing.JTable();
 
+        setClosable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Gerenciamento de Alunos");
+
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         pesquisaLB.setText("Pesquisar");
@@ -157,7 +162,7 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
                 .addComponent(novoBT)
                 .addGap(66, 66, 66)
                 .addComponent(editarBT)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
                 .addComponent(removerBT)
                 .addContainerGap())
         );
@@ -191,11 +196,9 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,13 +295,13 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
 
     @Override
     public void windowClosing(WindowEvent e) {
-        alunoTableModel.atualizarTabela();
-        desabilitarEditarRemover();
+
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-
+        alunoTableModel.atualizarTabela();
+        desabilitarEditarRemover();
     }
 
     @Override

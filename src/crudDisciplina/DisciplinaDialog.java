@@ -4,6 +4,10 @@
  */
 package crudDisciplina;
 
+import disciplina.Disciplina;
+import disciplina.GerenciarDisciplina;
+import java.awt.Color;
+
 /**
  *
  * @author Pedro Kravetz
@@ -19,6 +23,7 @@ public class DisciplinaDialog extends javax.swing.JDialog {
     public DisciplinaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        errorLB.setVisible(false);
     }
 
     /**
@@ -34,7 +39,6 @@ public class DisciplinaDialog extends javax.swing.JDialog {
         dadosDisciplinaLB = new javax.swing.JLabel();
         nomeLB = new javax.swing.JLabel();
         codigoLB = new javax.swing.JLabel();
-        professorLB = new javax.swing.JLabel();
         blocoLB = new javax.swing.JLabel();
         salaLB = new javax.swing.JLabel();
         cargaHorariaLB = new javax.swing.JLabel();
@@ -43,7 +47,6 @@ public class DisciplinaDialog extends javax.swing.JDialog {
         nomeTF = new javax.swing.JTextField();
         salvarBT = new javax.swing.JButton();
         cancelarBT = new javax.swing.JButton();
-        professorCB = new javax.swing.JComboBox<>();
         blocoTF = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         bibliografiaTA = new javax.swing.JTextArea();
@@ -51,17 +54,21 @@ public class DisciplinaDialog extends javax.swing.JDialog {
         cargaHorariaTF = new javax.swing.JFormattedTextField();
         codigoTF = new javax.swing.JFormattedTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPane1 = new javax.swing.JTextPane();
+        ementaTF = new javax.swing.JTextPane();
+        errorLB = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         dadosDisciplinaLB.setText("Dados da Disciplina");
 
         nomeLB.setText("Nome: ");
 
         codigoLB.setText("Código: ");
-
-        professorLB.setText("Professor: ");
 
         blocoLB.setText("Bloco: ");
 
@@ -74,6 +81,11 @@ public class DisciplinaDialog extends javax.swing.JDialog {
         bibliografiaLB.setText("Bibliografia: ");
 
         salvarBT.setText("Salvar");
+        salvarBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarBTActionPerformed(evt);
+            }
+        });
 
         cancelarBT.setText("Cancelar");
         cancelarBT.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +122,10 @@ public class DisciplinaDialog extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
-        jScrollPane3.setViewportView(jTextPane1);
+        jScrollPane3.setViewportView(ementaTF);
+
+        errorLB.setForeground(java.awt.Color.red);
+        errorLB.setText("Dados Incorretos");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -126,31 +141,29 @@ public class DisciplinaDialog extends javax.swing.JDialog {
                                 .addComponent(salvarBT)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cancelarBT))
-                            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(panelLayout.createSequentialGroup()
-                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(ementaLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(bibliografiaLB, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)))
-                                .addGroup(panelLayout.createSequentialGroup()
-                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(nomeLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(codigoLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(professorLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(blocoLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(salaLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cargaHorariaLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(nomeTF, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                                        .addComponent(codigoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(professorCB, 0, 313, Short.MAX_VALUE)
-                                        .addComponent(blocoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                                        .addComponent(salaTF, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                                        .addComponent(cargaHorariaTF, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)))))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ementaLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(bibliografiaLB, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(nomeLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(codigoLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(blocoLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(salaLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cargaHorariaLB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(nomeTF, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                                    .addComponent(codigoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(blocoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                                    .addComponent(salaTF, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                    .addComponent(cargaHorariaTF, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)))
+                            .addComponent(errorLB))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(dadosDisciplinaLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -159,7 +172,7 @@ public class DisciplinaDialog extends javax.swing.JDialog {
 
         panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelarBT, salvarBT});
 
-        panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {blocoTF, cargaHorariaTF, jScrollPane2, nomeTF, professorCB, salaTF});
+        panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {blocoTF, cargaHorariaTF, jScrollPane2, nomeTF, salaTF});
 
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,11 +187,7 @@ public class DisciplinaDialog extends javax.swing.JDialog {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codigoLB)
                     .addComponent(codigoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(professorLB)
-                    .addComponent(professorCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(28, 28, 28)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(blocoLB)
                     .addComponent(blocoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -198,11 +207,13 @@ public class DisciplinaDialog extends javax.swing.JDialog {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                     .addComponent(bibliografiaLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
+                .addGap(16, 16, 16)
+                .addComponent(errorLB)
+                .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarBT)
                     .addComponent(cancelarBT))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         panelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jScrollPane2, jScrollPane3});
@@ -225,7 +236,132 @@ public class DisciplinaDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_cancelarBTActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        limparTextos();
+    }//GEN-LAST:event_formWindowClosed
 
+    private void salvarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBTActionPerformed
+        if (validarForm()) {
+            errorLB.setVisible(false);
+            
+            disciplina.setNome(nomeTF.getText().trim());
+            disciplina.setCodigo(codigoTF.getText().trim());
+            disciplina.setBibliografia(bibliografiaTA.getText().trim());
+            disciplina.setBloco(blocoTF.getText().trim().charAt(0));
+            disciplina.setCargaHoraria(Integer.parseInt(cargaHorariaTF.getText().trim()));
+            disciplina.setEmenta(ementaTF.getText().trim());
+            disciplina.setSala(Integer.parseInt(salaTF.getText().trim()));
+            if (disciplina.getId() == 0) {
+                gerDisciplina.create(disciplina);
+            } else {
+                gerDisciplina.update(disciplina);
+            }
+            
+            dispose();
+        } else {
+            errorLB.setVisible(true);
+        }
+    }//GEN-LAST:event_salvarBTActionPerformed
+    
+    private void limparTextos() {
+        nomeTF.setText("");
+        codigoTF.setText("");
+        blocoTF.setText("");
+        salaTF.setText("");
+        cargaHorariaTF.setText("");
+        ementaTF.setText("");
+        bibliografiaTA.setText("");
+    }
+    
+    private boolean validarForm() {
+        boolean isValido = true;
+        
+        if (nomeTF.getText().trim().equals("")) {
+            isValido = false;
+            nomeLB.setForeground(Color.red);
+        } else {
+            nomeLB.setForeground(Color.black);
+        }
+        
+        if (codigoTF.getText().trim().length() != 5) {
+            isValido = false;
+            codigoLB.setForeground(Color.red);
+        } else {
+            codigoLB.setForeground(Color.black);
+        }
+        
+        if (blocoTF.getText().trim().equals("")) {
+            isValido = false;
+            blocoLB.setForeground(Color.red);
+        } else {
+            blocoLB.setForeground(Color.black);
+        }
+        
+        if (salaTF.getText().trim().length() != 3) {
+            isValido = false;
+            salaLB.setForeground(Color.red);
+        } else {
+            try {
+                Integer.parseInt(salaTF.getText().trim());
+                salaLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                salaLB.setForeground(Color.red);
+            }
+        }
+        if (cargaHorariaTF.getText().trim().equals("")) {
+            isValido = false;
+            cargaHorariaLB.setForeground(Color.red);
+        } else {
+            try {
+                Integer.parseInt(cargaHorariaTF.getText().trim());
+                cargaHorariaLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                cargaHorariaLB.setForeground(Color.red);
+            }
+        }
+        
+        if (ementaTF.getText().trim().equals("")) {
+            isValido = false;
+            ementaLB.setForeground(Color.red);
+        } else {
+            ementaLB.setForeground(Color.black);
+        }
+        
+        if (bibliografiaTA.getText().trim().equals("")) {
+            isValido = false;
+            bibliografiaLB.setForeground(Color.red);
+        } else {
+            bibliografiaLB.setForeground(Color.black);
+        }
+        return isValido;
+    }
+    
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+    
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+    
+    public void setGerDisciplina(GerenciarDisciplina gerDisciplina) {
+        this.gerDisciplina = gerDisciplina;
+    }
+    
+    public void objectToForm() {
+        nomeTF.setText(disciplina.getNome());
+        codigoTF.setText(disciplina.getCodigo());
+        blocoTF.setText(String.valueOf(disciplina.getBloco()));
+        salaTF.setText(String.valueOf(disciplina.getSala()));
+        cargaHorariaTF.setText(String.valueOf(disciplina.getCargaHoraria()));
+        ementaTF.setText(disciplina.getEmenta());
+        bibliografiaTA.setText(disciplina.getBibliografia());
+    }
+    
+    private GerenciarDisciplina gerDisciplina;
+    private Disciplina disciplina;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bibliografiaLB;
     private javax.swing.JTextArea bibliografiaTA;
@@ -238,16 +374,16 @@ public class DisciplinaDialog extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField codigoTF;
     private javax.swing.JLabel dadosDisciplinaLB;
     private javax.swing.JLabel ementaLB;
+    private javax.swing.JTextPane ementaTF;
+    private javax.swing.JLabel errorLB;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextPane jTextPane1;
     private javax.swing.JLabel nomeLB;
     private javax.swing.JTextField nomeTF;
     private javax.swing.JPanel panel;
-    private javax.swing.JComboBox<String> professorCB;
-    private javax.swing.JLabel professorLB;
     private javax.swing.JLabel salaLB;
     private javax.swing.JFormattedTextField salaTF;
     private javax.swing.JButton salvarBT;
     // End of variables declaration//GEN-END:variables
+
 }

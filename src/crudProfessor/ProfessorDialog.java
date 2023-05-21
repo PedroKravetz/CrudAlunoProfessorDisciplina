@@ -4,7 +4,16 @@
  */
 package crudProfessor;
 
+import endereco.Endereco;
 import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import pessoa.Sexo;
+import professor.GerenciarProfessor;
+import professor.Professor;
 
 /**
  *
@@ -18,6 +27,8 @@ public class ProfessorDialog extends javax.swing.JDialog {
     public ProfessorDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        errorLB.setVisible(false);
+        sdf = new SimpleDateFormat("dd/MM/yyyy");
     }
 
     /**
@@ -70,6 +81,11 @@ public class ProfessorDialog extends javax.swing.JDialog {
         dataNascimentoTF = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         dadosProfessorLB.setText("Dados do Professor");
 
@@ -102,6 +118,11 @@ public class ProfessorDialog extends javax.swing.JDialog {
         femininoRBT.setText("Feminino");
 
         salvarBT.setText("Salvar");
+        salvarBT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarBTActionPerformed(evt);
+            }
+        });
 
         cancelarBT.setText("Cancelar");
         cancelarBT.addActionListener(new java.awt.event.ActionListener() {
@@ -155,13 +176,11 @@ public class ProfessorDialog extends javax.swing.JDialog {
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(dadosProfessorLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(273, 273, 273))
-                    .addGroup(panelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +196,7 @@ public class ProfessorDialog extends javax.swing.JDialog {
                                     .addComponent(nomeLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(emailTF, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                    .addComponent(emailTF)
                                     .addGroup(panelLayout.createSequentialGroup()
                                         .addComponent(masculinoRBT, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,7 +208,7 @@ public class ProfessorDialog extends javax.swing.JDialog {
                                     .addComponent(rpTF)
                                     .addComponent(jScrollPane1)
                                     .addComponent(salarioTF)
-                                    .addComponent(departamentoTF)))
+                                    .addComponent(departamentoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(cepLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -199,17 +218,19 @@ public class ProfessorDialog extends javax.swing.JDialog {
                                     .addComponent(complementoLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cepTF, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(ruaTF, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(bairroTF, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(numeroTF, javax.swing.GroupLayout.Alignment.LEADING)))
+                                    .addComponent(numeroTF, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(salvarBT)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cancelarBT))
                             .addComponent(errorLB))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE))
+                    .addComponent(dadosProfessorLB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         panelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelarBT, salvarBT});
@@ -289,13 +310,13 @@ public class ProfessorDialog extends javax.swing.JDialog {
                         .addComponent(complementoLB)
                         .addGap(70, 70, 70))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(errorLB)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salvarBT)
                     .addComponent(cancelarBT))
-                .addContainerGap())
+                .addGap(115, 115, 115))
         );
 
         panelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {formacaoLB, jScrollPane1});
@@ -304,11 +325,17 @@ public class ProfessorDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 819, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -318,8 +345,129 @@ public class ProfessorDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_cancelarBTActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        limparTextos();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void salvarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBTActionPerformed
+        if (validarForm()) {
+            errorLB.setVisible(false);
+
+            professor.setNome(nomeTF.getText().trim());
+
+            try {
+                Date dataNasc = sdf.parse(dataNascimentoTF.getText().trim());
+                professor.setDataNascimento(dataNasc);
+            } catch (ParseException ex) {
+                JOptionPane.showMessageDialog(this, "Data inválida");
+                return;
+            }
+
+            professor.setCpf(cpfTF.getText().trim());
+            professor.setRg(rgTF.getText().trim());
+            professor.setEmail(emailTF.getText().trim());
+            professor.setRp(Integer.parseInt(rpTF.getText().trim()));
+            professor.setFormacao(formacaoTP.getText().trim());
+            professor.setDepartamento(departamentoTF.getText().trim());
+            professor.setSalario(Integer.parseInt(salarioTF.getText().trim()));
+
+            if (masculinoRBT.isSelected()) {
+                professor.setSexo(Sexo.MASCULINO);
+            } else {
+                professor.setSexo(Sexo.FEMININO);
+            }
+            endereco.setBairro(bairroTF.getText().trim());
+            endereco.setCep(cepTF.getText().trim());
+            endereco.setComplemento(complementoTF.getText().trim());
+            endereco.setNumero(Integer.parseInt(numeroTF.getText().trim()));
+            endereco.setRua(ruaTF.getText().trim());
+            endereco.setId(professor.getId());
+            professor.setEndereco(endereco);
+            if (professor.getId() == 0) {
+                gerProfessor.create(professor);
+            } else {
+                gerProfessor.update(professor);
+            }
+
+            dispose();
+        } else {
+            errorLB.setVisible(true);
+        }
+    }//GEN-LAST:event_salvarBTActionPerformed
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+        if (professor.getId() == 0) {
+            endereco = new Endereco();
+        } else {
+            endereco = professor.getEndereco();
+        }
+    }
+
+    private void limparTextos() {
+        buttonGroup1.clearSelection();
+        nomeTF.setText("");
+        cpfTF.setText("");
+        rgTF.setText("");
+        rpTF.setText("");
+        departamentoTF.setText("");
+        salarioTF.setText("");
+        formacaoTP.setText("");
+        dataNascimentoTF.setText("");
+        emailTF.setText("");
+        cepTF.setText("");
+        bairroTF.setText("");
+        ruaTF.setText("");
+        numeroTF.setText("");
+        complementoTF.setText("");
+    }
+
     private boolean validarForm() {
         boolean isValido = true;
+        if (rpTF.getText().trim().equals("")) {
+            isValido = false;
+            rpLB.setForeground(Color.red);
+        } else {
+            try {
+                Integer.parseInt(rpTF.getText().trim());
+                rpLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                rpLB.setForeground(Color.red);
+            }
+        }
+
+        if (formacaoTP.getText().trim().equals("")) {
+            isValido = false;
+            formacaoLB.setForeground(Color.red);
+        } else {
+            formacaoLB.setForeground(Color.black);
+        }
+
+        if (departamentoTF.getText().trim().equals("")) {
+            isValido = false;
+            departamentoLB.setForeground(Color.red);
+        } else {
+            departamentoLB.setForeground(Color.black);
+        }
+
+        if (salarioTF.getText().trim().equals("")) {
+            isValido = false;
+            salarioLB.setForeground(Color.red);
+        } else {
+            try {
+                Integer.parseInt(salarioTF.getText().trim());
+                salarioLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                salarioLB.setForeground(Color.red);
+            }
+        }
+
         if (cepTF.getText().trim().length() != 9) {
             isValido = false;
             cepLB.setForeground(Color.red);
@@ -345,7 +493,13 @@ public class ProfessorDialog extends javax.swing.JDialog {
             isValido = false;
             numeroLB.setForeground(Color.red);
         } else {
-            numeroLB.setForeground(Color.black);
+            try {
+                Integer.parseInt(numeroTF.getText().trim());
+                numeroLB.setForeground(Color.black);
+            } catch (Exception e) {
+                isValido = false;
+                numeroLB.setForeground(Color.red);
+            }
         }
 
         if (nomeTF.getText().trim().equals("")) {
@@ -389,10 +543,40 @@ public class ProfessorDialog extends javax.swing.JDialog {
         } else {
             sexoLB.setForeground(Color.black);
         }
-        errorLB.setVisible(true);
         return isValido;
     }
 
+    public void setGerenciarProfessor(GerenciarProfessor gerProfessor) {
+        this.gerProfessor = gerProfessor;
+    }
+
+    public void objectToForm() {
+        nomeTF.setText(professor.getNome());
+        cpfTF.setText(professor.getCpf());
+        rgTF.setText(professor.getRg());
+        emailTF.setText(professor.getEmail());
+        dataNascimentoTF.setText(sdf.format(professor.getDataNascimento()));
+        rpTF.setText(String.valueOf(professor.getRp()));
+        departamentoTF.setText(professor.getDepartamento());
+        salarioTF.setText(String.valueOf(professor.getSalario()));
+        formacaoTP.setText(professor.getFormacao());
+        cepTF.setText(endereco.getCep());
+        ruaTF.setText(endereco.getRua());
+        numeroTF.setText(String.valueOf(endereco.getNumero()));
+        bairroTF.setText(endereco.getBairro());
+        complementoTF.setText(endereco.getComplemento());
+        if (professor.getSexo() == Sexo.MASCULINO) {
+            masculinoRBT.setSelected(true);
+        } else {
+            femininoRBT.setSelected(true);
+        }
+    }
+
+    private SimpleDateFormat sdf;
+    private Professor professor;
+    private Calendar cal;
+    private GerenciarProfessor gerProfessor;
+    private Endereco endereco;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bairroLB;
