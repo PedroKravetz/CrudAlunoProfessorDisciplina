@@ -1,5 +1,6 @@
 package main;
 
+import bancoDados.bancoDados;
 import crudAluno.AlunoInternalFrame;
 import crudDisciplina.DisciplinaInternalFrame;
 import crudProfessor.ProfessorInternalFrame;
@@ -18,13 +19,15 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
+        banco = new bancoDados("jdbc:mysql://localhost:3306/aps","pedro","1263");
         professorJIF = new ProfessorInternalFrame(this);
-        alunoJIF = new AlunoInternalFrame(this);
+        alunoJIF = new AlunoInternalFrame(this,banco);
         disciplinaJIF = new DisciplinaInternalFrame(this);
         initComponents();
         this.getContentPane().add(professorJIF);
         this.getContentPane().add(alunoJIF);
         this.getContentPane().add(disciplinaJIF);
+        this.setSize(800, 800);
     }
 
     /**
@@ -115,7 +118,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_ProfessorMNIActionPerformed
 
     private void AlunoMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlunoMNIActionPerformed
+        banco.populaAluno();
         alunoJIF.setVisible(true);
+        alunoJIF.limpar();
     }//GEN-LAST:event_AlunoMNIActionPerformed
 
     /**
@@ -153,6 +158,7 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
+    private bancoDados banco;
     private ProfessorInternalFrame professorJIF;
     private AlunoInternalFrame alunoJIF;
     private DisciplinaInternalFrame disciplinaJIF;

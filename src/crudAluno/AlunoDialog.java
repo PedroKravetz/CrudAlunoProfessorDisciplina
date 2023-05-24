@@ -364,7 +364,8 @@ public class AlunoDialog extends javax.swing.JDialog {
             aluno.setCpf(cpfTF.getText().trim());
             aluno.setRg(rgTF.getText().trim());
             aluno.setEmail(emailTF.getText().trim());
-            aluno.setRa(Integer.parseInt(raTF.getText().trim()));
+            if(aluno.getId() == 0)
+                aluno.setRa(Integer.parseInt(raTF.getText().trim()));
             aluno.setPeriodo(periodoTF.getText().trim());
             aluno.setAno(anoTF.getText().trim());
 
@@ -381,12 +382,28 @@ public class AlunoDialog extends javax.swing.JDialog {
             endereco.setId(aluno.getId());
             aluno.setEndereco(endereco);
             if (aluno.getId() == 0) {
-                gerAluno.create(aluno);
+                if(gerAluno.insereAlunoBanco(aluno))
+                {
+                    gerAluno.create(aluno);
+                    dispose();
+                }
+                else
+                {
+                    raLB.setForeground(Color.red);
+                    errorLB.setVisible(true);
+                }
             } else {
-                gerAluno.update(aluno);
+                if(gerAluno.updateAlunoBanco(aluno) && Integer.parseInt(raTF.getText().trim())==aluno.getRa())
+                {
+                    gerAluno.update(aluno);
+                    dispose();
+                }
+                else
+                {
+                    raLB.setForeground(Color.red);
+                    errorLB.setVisible(true);
+                }
             }
-
-            dispose();
         } else {
             errorLB.setVisible(true);
         }

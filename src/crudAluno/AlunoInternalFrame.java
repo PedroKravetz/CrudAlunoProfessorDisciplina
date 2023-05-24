@@ -7,6 +7,8 @@ package crudAluno;
 import aluno.Aluno;
 import aluno.AlunoTableModel;
 import aluno.GerenciarAluno;
+import bancoDados.bancoDados;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Collection;
@@ -22,9 +24,10 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
     /**
      * Creates new form ProfessorInternalFrame
      */
-    public AlunoInternalFrame(JFrame parent) {
+    public AlunoInternalFrame(JFrame parent, bancoDados db) {
         alunoDialog = new AlunoDialog(parent, true);
         gerAluno = new GerenciarAluno();
+        db.setGerAluno(gerAluno);
         alunoDialog.setGerenciarAluno(gerAluno);
         alunoTableModel = new AlunoTableModel(gerAluno);
         alunoDialog.addWindowListener(this);
@@ -219,6 +222,13 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
         alunoDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
+    public void limpar()
+    {
+        alunoTableModel.atualizarTabela();
+        desabilitarEditarRemover();
+        pesquisaTF.setText("");
+    }
+
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
         alunoTableModel.atualizarTabela();
         desabilitarEditarRemover();
@@ -250,7 +260,8 @@ public class AlunoInternalFrame extends javax.swing.JInternalFrame implements Wi
         int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o cliente " + aluno.getNome() + "?",
                 "Confirma a exclusão?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            gerAluno.remover(aluno.getId());
+            if(gerAluno.removeAlunoBanco(aluno))
+                gerAluno.remover(aluno.getId());
             alunoTableModel.atualizarTabela();
             desabilitarEditarRemover();
         }
