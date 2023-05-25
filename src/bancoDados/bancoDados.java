@@ -9,6 +9,7 @@ import java.util.Date;
 import aluno.Aluno;
 import aluno.GerenciarAluno;
 import endereco.Endereco;
+import java.sql.Statement;
 import pessoa.Sexo;
 
 
@@ -39,8 +40,10 @@ public class bancoDados
             {
                 Connection conexao = DriverManager.getConnection(url, usuario, senha);
                 PreparedStatement declaracao = conexao.prepareStatement
-                    ("select * " +
-                    "from aluno "            
+                    ("select distinct nome,email,data_nascimento,sexo, pessoa.cpf,rg,ra,periodo,ano,cep,rua,bairro,numero,complemento\n" +
+                    "from pessoa\n" +
+                    "join aluno on pessoa.cpf = aluno.cpf\n" +
+                    "join endereco on pessoa.cpf = endereco.cpf"           
                     );
                 ResultSet resultado = declaracao.executeQuery();
                 while(resultado.next())
@@ -60,30 +63,45 @@ public class bancoDados
 
     public boolean insereAluno(Aluno aluno)
     {
-        try 
+        try(Connection conexao = DriverManager.getConnection(url, usuario, senha);
+                Statement transacao = conexao.createStatement();)
             {
-                Connection conexao = DriverManager.getConnection(url, usuario, senha);
-                PreparedStatement declaracao = conexao.prepareStatement
-                    ("insert into aluno values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-                declaracao.setString(1,aluno.getNome());
-                declaracao.setString(2,aluno.getEmail());
-                declaracao.setDate(3,new java.sql.Date(aluno.getDataNascimento().getTime()));
+                transacao.execute("start transaction; ");
+                PreparedStatement declaracao1 = conexao.prepareStatement
+                    ("insert into pessoa(nome,email,data_nascimento,sexo,cpf,rg) values(?,?,?,?,?,?);");
+                PreparedStatement declaracao2 = conexao.prepareStatement
+                    ("insert into aluno(ra,periodo,ano,cpf) values(?,?,?,?);");
+                PreparedStatement declaracao3 = conexao.prepareStatement
+                    ("insert into endereco(cep,rua,bairro,numero,complemento,cpf) values(?,?,?,?,?,?);");
+                declaracao1.setString(1,aluno.getNome());
+                declaracao1.setString(2,aluno.getEmail());
+                declaracao1.setDate(3,new java.sql.Date(aluno.getDataNascimento().getTime()));
                 if(aluno.getSexo()== Sexo.MASCULINO)
-                    declaracao.setString(4,"M");
+                    declaracao1.setString(4,"M");
                 else
-                    declaracao.setString(4,"F");
-                declaracao.setString(5,aluno.getCpf());
-                declaracao.setString(6,aluno.getRg());
-                declaracao.setInt(7,aluno.getRa());
-                declaracao.setString(8,aluno.getPeriodo());
-                declaracao.setString(9,aluno.getAno());
-                declaracao.setString(10,aluno.getEndereco().getCep());
-                declaracao.setString(11,aluno.getEndereco().getRua());
-                declaracao.setString(12,aluno.getEndereco().getBairro());
-                declaracao.setInt(13,aluno.getEndereco().getNumero());
-                declaracao.setString(14,aluno.getEndereco().getComplemento());
-                declaracao.executeUpdate();
-                declaracao.close();
+                    declaracao1.setString(4,"F");
+                declaracao1.setString(5,aluno.getCpf());
+                declaracao1.setString(6,aluno.getRg());
+                declaracao2.setInt(1,aluno.getRa());
+                declaracao2.setString(2,aluno.getPeriodo());
+                declaracao2.setString(3,aluno.getAno());
+                declaracao2.setString(4,aluno.getCpf());
+                declaracao3.setString(1,aluno.getEndereco().getCep());
+                declaracao3.setString(2,aluno.getEndereco().getRua());
+                declaracao3.setString(3,aluno.getEndereco().getBairro());
+                declaracao3.setInt(4,aluno.getEndereco().getNumero());
+                declaracao3.setString(5,aluno.getEndereco().getComplemento());
+                declaracao3.setString(6,aluno.getCpf());
+                declaracao1.executeUpdate();
+                declaracao2.executeUpdate();
+                declaracao3.executeUpdate();
+                Statement commit = conexao.createStatement();
+                commit.execute("COMMIT; ");
+                transacao.close();
+                declaracao1.close();
+                declaracao2.close();
+                declaracao3.close();
+                commit.close();
                 conexao.close();
                 return true;
             } 
@@ -96,47 +114,58 @@ public class bancoDados
 
     public boolean updateAluno(Aluno aluno)
     {
-        try 
+        try(Connection conexao = DriverManager.getConnection(url, usuario, senha);
+            Statement transacao = conexao.createStatement();)
         {
-            Connection conexao = DriverManager.getConnection(url, usuario, senha);
-            PreparedStatement declaracao = conexao.prepareStatement
-                ("update aluno "+
+            transacao.execute("start transaction; ");
+            PreparedStatement declaracao1 = conexao.prepareStatement
+                ("update pessoa "+
                 "set nome = ?, " +
                 "email = ?, " +
                 "data_nascimento = ?, " +
                 "sexo = ?, " +
-                "cpf = ?, " +
-                "rg = ?, " +
-                "ra = ?, " +
+                "rg = ? " +
+                "where cpf = '" + aluno.getCpf() + "' ");
+            PreparedStatement declaracao2 = conexao.prepareStatement
+                ("update aluno " +
+                "set ra = ?, " +
                 "periodo = ?, " +
-                "ano = ?, " +
-                "cep = ?, " +
+                "ano = ? " +
+                "where cpf = '" + aluno.getCpf() + "' ");
+            PreparedStatement declaracao3 = conexao.prepareStatement
+                ("update endereco " +
+                "set cep = ?, " +
                 "rua = ?, " +
                 "bairro = ?, " +
                 "numero = ?, " +
                 "complemento = ? " +
-                "where ra = " + aluno.getRa()
-                );
-            declaracao.setString(1,aluno.getNome());
-            declaracao.setString(2,aluno.getEmail());
-            declaracao.setDate(3,new java.sql.Date(aluno.getDataNascimento().getTime()));
+                "where cpf = '" + aluno.getCpf() + "' ");
+            declaracao1.setString(1,aluno.getNome());
+            declaracao1.setString(2,aluno.getEmail());
+            declaracao1.setDate(3,new java.sql.Date(aluno.getDataNascimento().getTime()));
             if(aluno.getSexo()== Sexo.MASCULINO)
-                declaracao.setString(4,"M");
+                declaracao1.setString(4,"M");
             else
-                declaracao.setString(4,"F");
-            declaracao.setString(5,aluno.getCpf());
-            declaracao.setString(6,aluno.getRg());
-            declaracao.setInt(7,aluno.getRa());
-            declaracao.setString(8,aluno.getPeriodo());
-            declaracao.setString(9,aluno.getAno());
-            declaracao.setString(10,aluno.getEndereco().getCep());
-            declaracao.setString(11,aluno.getEndereco().getRua());
-            declaracao.setString(12,aluno.getEndereco().getBairro());
-            declaracao.setInt(13,aluno.getEndereco().getNumero());
-            declaracao.setString(14,aluno.getEndereco().getComplemento());
-            //declaracao.setInt(15,aluno.getRa());
-            declaracao.executeUpdate();
-            declaracao.close();
+                declaracao1.setString(4,"F");
+            declaracao1.setString(5,aluno.getRg());
+            declaracao2.setInt(1,aluno.getRa());
+            declaracao2.setString(2,aluno.getPeriodo());
+            declaracao2.setString(3,aluno.getAno());
+            declaracao3.setString(1,aluno.getEndereco().getCep());
+            declaracao3.setString(2,aluno.getEndereco().getRua());
+            declaracao3.setString(3,aluno.getEndereco().getBairro());
+            declaracao3.setInt(4,aluno.getEndereco().getNumero());
+            declaracao3.setString(5,aluno.getEndereco().getComplemento());
+            declaracao3.executeUpdate();
+            declaracao2.executeUpdate();
+            declaracao1.executeUpdate();
+            Statement commit = conexao.createStatement();
+            commit.execute("COMMIT; ");
+            transacao.close();
+            declaracao1.close();
+            declaracao2.close();
+            declaracao3.close();
+            commit.close();
             conexao.close();
             return true;
         } 
@@ -149,13 +178,26 @@ public class bancoDados
 
     public boolean removeAluno(Aluno aluno)
     {
-        try 
+        try(Connection conexao = DriverManager.getConnection(url, usuario, senha);
+            Statement transacao = conexao.createStatement();)
             {
-                Connection conexao = DriverManager.getConnection(url, usuario, senha);
-                PreparedStatement declaracao = conexao.prepareStatement
-                    ("delete from aluno where ra = " + aluno.getRa());
-                declaracao.executeUpdate();
-                declaracao.close();
+                transacao.execute("start transaction; ");
+                PreparedStatement declaracao1 = conexao.prepareStatement
+                    ("delete from pessoa where cpf = '" + aluno.getCpf() + "' ");
+                PreparedStatement declaracao2 = conexao.prepareStatement
+                    ("delete from aluno where cpf = '" + aluno.getCpf() + "' ");
+                PreparedStatement declaracao3 = conexao.prepareStatement
+                    ("delete from endereco where cpf = '" + aluno.getCpf() + "' ");
+                declaracao3.executeUpdate();
+                declaracao2.executeUpdate();
+                declaracao1.executeUpdate();
+                Statement commit = conexao.createStatement();
+                commit.execute("COMMIT; ");
+                transacao.close();
+                declaracao1.close();
+                declaracao2.close();
+                declaracao3.close();
+                commit.close();
                 conexao.close();
                 return true;
             } 

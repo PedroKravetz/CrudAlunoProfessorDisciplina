@@ -7,6 +7,7 @@ package crudDisciplina;
 import disciplina.Disciplina;
 import disciplina.GerenciarDisciplina;
 import java.awt.Color;
+import java.awt.Dimension;
 
 /**
  *
@@ -61,6 +62,9 @@ public class DisciplinaDialog extends javax.swing.JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
 
@@ -262,6 +266,10 @@ public class DisciplinaDialog extends javax.swing.JDialog {
             errorLB.setVisible(true);
         }
     }//GEN-LAST:event_salvarBTActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        resize(new Dimension());
+    }//GEN-LAST:event_formWindowActivated
     
     private void limparTextos() {
         nomeTF.setText("");

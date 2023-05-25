@@ -8,6 +8,7 @@ import aluno.Aluno;
 import aluno.GerenciarAluno;
 import endereco.Endereco;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -84,6 +85,9 @@ public class AlunoDialog extends javax.swing.JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
 
@@ -342,7 +346,7 @@ public class AlunoDialog extends javax.swing.JDialog {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         limparTextos();
     }//GEN-LAST:event_formWindowClosed
-
+    
     private void cancelarBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarBTActionPerformed
         dispose();
     }//GEN-LAST:event_cancelarBTActionPerformed
@@ -360,8 +364,9 @@ public class AlunoDialog extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Data inválida");
                 return;
             }
-
-            aluno.setCpf(cpfTF.getText().trim());
+            
+            if(aluno.getId() == 0)
+                aluno.setCpf(cpfTF.getText().trim());
             aluno.setRg(rgTF.getText().trim());
             aluno.setEmail(emailTF.getText().trim());
             if(aluno.getId() == 0)
@@ -393,7 +398,7 @@ public class AlunoDialog extends javax.swing.JDialog {
                     errorLB.setVisible(true);
                 }
             } else {
-                if(gerAluno.updateAlunoBanco(aluno) && Integer.parseInt(raTF.getText().trim())==aluno.getRa())
+                if(gerAluno.updateAlunoBanco(aluno) && Integer.parseInt(raTF.getText().trim())==aluno.getRa() && cpfTF.getText().trim().equals(aluno.getCpf()))
                 {
                     gerAluno.update(aluno);
                     dispose();
@@ -408,6 +413,10 @@ public class AlunoDialog extends javax.swing.JDialog {
             errorLB.setVisible(true);
         }
     }//GEN-LAST:event_salvarBTActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        resize(new Dimension());
+    }//GEN-LAST:event_formWindowActivated
 
     public Aluno getAluno() {
         return aluno;
