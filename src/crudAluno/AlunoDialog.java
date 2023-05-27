@@ -394,7 +394,6 @@ public class AlunoDialog extends javax.swing.JDialog {
                 }
                 else
                 {
-                    raLB.setForeground(Color.red);
                     errorLB.setVisible(true);
                 }
             } else {
@@ -405,7 +404,6 @@ public class AlunoDialog extends javax.swing.JDialog {
                 }
                 else
                 {
-                    raLB.setForeground(Color.red);
                     errorLB.setVisible(true);
                 }
             }

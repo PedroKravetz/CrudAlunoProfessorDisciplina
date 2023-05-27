@@ -249,19 +249,36 @@ public class DisciplinaDialog extends javax.swing.JDialog {
             errorLB.setVisible(false);
             
             disciplina.setNome(nomeTF.getText().trim());
-            disciplina.setCodigo(codigoTF.getText().trim());
+            if (disciplina.getId() == 0)
+                disciplina.setCodigo(codigoTF.getText().trim());
             disciplina.setBibliografia(bibliografiaTA.getText().trim());
             disciplina.setBloco(blocoTF.getText().trim().charAt(0));
             disciplina.setCargaHoraria(Integer.parseInt(cargaHorariaTF.getText().trim()));
             disciplina.setEmenta(ementaTF.getText().trim());
             disciplina.setSala(Integer.parseInt(salaTF.getText().trim()));
-            if (disciplina.getId() == 0) {
-                gerDisciplina.create(disciplina);
-            } else {
-                gerDisciplina.update(disciplina);
-            }
             
-            dispose();
+            if (disciplina.getId() == 0) {
+                if(gerDisciplina.insereDisciplinaBanco(disciplina))
+                {
+                    gerDisciplina.create(disciplina);
+                    dispose();
+                }
+                else
+                { 
+                    errorLB.setVisible(true);
+                }
+            } else {
+                if(gerDisciplina.updateDisciplinaBanco(disciplina) && codigoTF.getText().trim().equals(disciplina.getCodigo()))
+                {
+                    gerDisciplina.update(disciplina);
+                    dispose();
+                }
+                else
+                { 
+                    errorLB.setVisible(true);
+                }
+            }
+
         } else {
             errorLB.setVisible(true);
         }

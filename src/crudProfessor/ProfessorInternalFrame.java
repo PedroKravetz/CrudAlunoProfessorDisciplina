@@ -4,6 +4,7 @@
  */
 package crudProfessor;
 
+import bancoDados.bancoDados;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Collection;
@@ -24,9 +25,10 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame implement
      *
      * @param parent
      */
-    public ProfessorInternalFrame(JFrame parent) {
+    public ProfessorInternalFrame(JFrame parent, bancoDados db) {
         professorDialog = new ProfessorDialog(parent, true);
         gerProfessor = new GerenciarProfessor();
+        db.setGerProfessor(gerProfessor);
         professorDialog.setGerenciarProfessor(gerProfessor);
         professorTableModel = new ProfessorTableModel(gerProfessor);
         professorDialog.addWindowListener(this);
@@ -221,6 +223,12 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame implement
         professorDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
+    public void limpar() {                                         
+        professorTableModel.atualizarTabela();
+        desabilitarEditarRemover();
+        pesquisaTF.setText("");
+    } 
+    
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
         professorTableModel.atualizarTabela();
         desabilitarEditarRemover();
@@ -252,7 +260,8 @@ public class ProfessorInternalFrame extends javax.swing.JInternalFrame implement
         int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o cliente " + professor.getNome() + "?",
                 "Confirma a exclusão?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            gerProfessor.remover(professor.getId());
+            if(gerProfessor.removeProfessorBanco(professor))
+                gerProfessor.remover(professor.getId());
             professorTableModel.atualizarTabela();
             desabilitarEditarRemover();
         }

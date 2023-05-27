@@ -20,9 +20,9 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         banco = new bancoDados("jdbc:mysql://localhost:3306/aps","pedro","1263");
-        professorJIF = new ProfessorInternalFrame(this);
+        professorJIF = new ProfessorInternalFrame(this,banco);
         alunoJIF = new AlunoInternalFrame(this,banco);
-        disciplinaJIF = new DisciplinaInternalFrame(this);
+        disciplinaJIF = new DisciplinaInternalFrame(this,banco);
         initComponents();
         this.getContentPane().add(professorJIF);
         this.getContentPane().add(alunoJIF);
@@ -110,11 +110,15 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_SairMNIActionPerformed
 
     private void DisciplinaMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DisciplinaMNIActionPerformed
+        banco.populaDisciplina();
         disciplinaJIF.setVisible(true);
+        disciplinaJIF.limpar();
     }//GEN-LAST:event_DisciplinaMNIActionPerformed
 
     private void ProfessorMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfessorMNIActionPerformed
+        banco.populaProfessor();
         professorJIF.setVisible(true);
+        professorJIF.limpar();
     }//GEN-LAST:event_ProfessorMNIActionPerformed
 
     private void AlunoMNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AlunoMNIActionPerformed

@@ -366,10 +366,12 @@ public class ProfessorDialog extends javax.swing.JDialog {
                 return;
             }
 
-            professor.setCpf(cpfTF.getText().trim());
+            if(professor.getId() == 0)
+                professor.setCpf(cpfTF.getText().trim());
             professor.setRg(rgTF.getText().trim());
             professor.setEmail(emailTF.getText().trim());
-            professor.setRp(Integer.parseInt(rpTF.getText().trim()));
+            if(professor.getId() == 0)
+                professor.setRp(Integer.parseInt(rpTF.getText().trim()));
             professor.setFormacao(formacaoTP.getText().trim());
             professor.setDepartamento(departamentoTF.getText().trim());
             professor.setSalario(Integer.parseInt(salarioTF.getText().trim()));
@@ -386,13 +388,28 @@ public class ProfessorDialog extends javax.swing.JDialog {
             endereco.setRua(ruaTF.getText().trim());
             endereco.setId(professor.getId());
             professor.setEndereco(endereco);
+            
             if (professor.getId() == 0) {
-                gerProfessor.create(professor);
+                if(gerProfessor.insereProfessorBanco(professor))
+                {
+                    gerProfessor.create(professor);
+                    dispose();
+                }
+                else
+                { 
+                    errorLB.setVisible(true);
+                }
             } else {
-                gerProfessor.update(professor);
+                if(gerProfessor.updateProfessorBanco(professor) && Integer.parseInt(rpTF.getText().trim())==professor.getRp() && cpfTF.getText().trim().equals(professor.getCpf()))
+                {
+                    gerProfessor.update(professor);
+                    dispose();
+                }
+                else
+                {
+                    errorLB.setVisible(true);
+                }
             }
-
-            dispose();
         } else {
             errorLB.setVisible(true);
         }

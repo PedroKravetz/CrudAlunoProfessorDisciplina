@@ -4,6 +4,7 @@
  */
 package disciplina;
 
+import bancoDados.bancoDados;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,12 +17,33 @@ public class GerenciarDisciplina {
 
     private int ultimoId;
     private HashMap<Integer, Disciplina> disciplinasBD;
+    private bancoDados banco;
 
     public GerenciarDisciplina() {
         ultimoId = 0;
         disciplinasBD = new HashMap<>();
     }
 
+    public void setBancoDados(bancoDados bd)
+    {
+        banco = bd;
+    }
+
+    public boolean insereDisciplinaBanco(Disciplina disciplina)
+    {
+        return banco.insereDisciplina(disciplina);
+    }
+
+    public boolean updateDisciplinaBanco(Disciplina disciplina)
+    {
+        return banco.updateDisciplina(disciplina);
+    }
+
+    public boolean removeDisciplinaBanco(Disciplina disciplina)
+    {
+        return banco.removeDisciplina(disciplina);
+    }
+    
     public void create(Disciplina disciplina) {
         disciplina.setId(++ultimoId);
         disciplinasBD.put(ultimoId, disciplina);

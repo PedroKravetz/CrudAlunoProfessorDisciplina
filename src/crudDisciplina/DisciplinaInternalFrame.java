@@ -4,6 +4,7 @@
  */
 package crudDisciplina;
 
+import bancoDados.bancoDados;
 import disciplina.Disciplina;
 import disciplina.DisciplinaTableModel;
 import disciplina.GerenciarDisciplina;
@@ -22,9 +23,10 @@ public class DisciplinaInternalFrame extends javax.swing.JInternalFrame implemen
     /**
      * Creates new form ProfessorInternalFrame
      */
-    public DisciplinaInternalFrame(JFrame parent) {
+    public DisciplinaInternalFrame(JFrame parent, bancoDados bd) {
         disciplinaDialog = new DisciplinaDialog(parent, true);
         gerDisciplina = new GerenciarDisciplina();
+        bd.setGerDisciplina(gerDisciplina);
         disciplinaDialog.setGerDisciplina(gerDisciplina);
         disciplinaTableModel = new DisciplinaTableModel(gerDisciplina);
         disciplinaDialog.addWindowListener(this);
@@ -219,6 +221,12 @@ public class DisciplinaInternalFrame extends javax.swing.JInternalFrame implemen
         disciplinaDialog.setVisible(true);
     }//GEN-LAST:event_novoBTActionPerformed
 
+    public void limpar() {                                         
+        disciplinaTableModel.atualizarTabela();
+        desabilitarEditarRemover();
+        pesquisaTF.setText("");
+    } 
+    
     private void limparBTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limparBTActionPerformed
         disciplinaTableModel.atualizarTabela();
         desabilitarEditarRemover();
@@ -256,7 +264,8 @@ public class DisciplinaInternalFrame extends javax.swing.JInternalFrame implemen
         int opcao = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o cliente " + disciplina.getNome() + "?",
                 "Confirma a exclusão?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (opcao == JOptionPane.YES_OPTION) {
-            gerDisciplina.remover(disciplina.getId());
+            if(gerDisciplina.removeDisciplinaBanco(disciplina))
+                gerDisciplina.remover(disciplina.getId());
             disciplinaTableModel.atualizarTabela();
             desabilitarEditarRemover();
         }
