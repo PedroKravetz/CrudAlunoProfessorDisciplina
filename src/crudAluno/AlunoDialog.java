@@ -413,7 +413,7 @@ public class AlunoDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_salvarBTActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        resize(new Dimension());
+        //resize(new Dimension());
     }//GEN-LAST:event_formWindowActivated
 
     public Aluno getAluno() {
